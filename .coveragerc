@@ -1,2 +1,2 @@
 [run]
-omit = woodchips/_version.py
+omit = sawdust/_version.py

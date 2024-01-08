@@ -1,6 +1,6 @@
 <div align="center">
 
-# Woodchips
+# Sawdust
 
 The cutest little logger you've ever seen.
 
@@ -9,7 +9,7 @@ The cutest little logger you've ever seen.
 [![PyPi](https://img.shields.io/pypi/v/woodchips)](https://pypi.org/project/woodchips)
 [![Licence](https://img.shields.io/github/license/Justintime50/woodchips)](LICENSE)
 
-<img src="https://raw.githubusercontent.com/Justintime50/assets/main/src/woodchips/showcase.png" alt="Showcase">
+<img src="https://raw.githubusercontent.com/nwithan8/assets/main/src/sawdust/showcase.png" alt="Showcase">
 
 </div>
 
@@ -38,10 +38,10 @@ just install
 ### Setting up Woodchips
 
 ```python
-import woodchips
+import sawdust
 
 # Setup a new logger instance
-logger = woodchips.Logger(
+logger = sawdust.Logger(
     name='my_logger_name',  # The name of your logger instance, often will be `__name__`
     level='INFO',  # The log level you want to use
 )
@@ -61,10 +61,10 @@ logger.log_to_file(
 ### Using Woodchips
 
 ```python
-import woodchips
+import sawdust
 
 # Retrieve a logger instance by name (assumes it's already been created)
-logger = woodchips.get('my_logger_name')
+logger = sawdust.get('my_logger_name')
 
 # Log a message (will be logged to console and a file based on the example from above)
 logger.info('This is how to setup Woodchips!')
