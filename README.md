@@ -2,40 +2,38 @@
 
 # Sawdust
 
-The cutest little logger you've ever seen.
+An even cuter little logger.
 
-[![Build Status](https://github.com/Justintime50/woodchips/workflows/build/badge.svg)](https://github.com/Justintime50/woodchips/actions)
-[![Coverage Status](https://coveralls.io/repos/github/Justintime50/woodchips/badge.svg?branch=main)](https://coveralls.io/github/Justintime50/woodchips?branch=main)
+[![Build Status](https://github.com/nwithan8/sawdust/workflows/build/badge.svg)](https://github.com/nwithan8/sawdust/actions)
+[![Coverage Status](https://coveralls.io/repos/github/nwithan8/sawdust/badge.svg?branch=main)](https://coveralls.io/github/nwithan8/sawdust?branch=main)
 [![PyPi](https://img.shields.io/pypi/v/woodchips)](https://pypi.org/project/woodchips)
-[![Licence](https://img.shields.io/github/license/Justintime50/woodchips)](LICENSE)
+[![Licence](https://img.shields.io/github/license/nwithan8/sawdust)](LICENSE)
 
 <img src="https://raw.githubusercontent.com/nwithan8/assets/main/src/sawdust/showcase.png" alt="Showcase">
 
 </div>
 
-> Aren't logs just a bunch of woodchips?
+> > Aren't logs just a bunch of woodchips?
+>
+> Aren't woodchips just a bunch of sawdust?
 
-Woodchips was created to be the cutest little logger you've ever seen. I wanted something dead simple and reusable as I found myself using the same logging setup over and over in projects. Woodchips gives you everything you need to setup the Python logging library in your project, all without the need to import or call on the `logging` package, know the various syntaxes for setting up handlers and formatters, etc which makes logging with Woodchips incredibly simple and clean.
+Sawdust is a re-implementation (improvement?) of [Woodchips](https://github.com/Justintime50/woodchips). This is largely
+a joke (I know the Woodchips developer), but also a product of my inability to be satisfied with a product that does 90%
+of what I expect, as well as my inability to not needlessly refactor things.
 
 ## Install
 
 ```bash
 # Install tool
-pip3 install woodchips
+pip3 install sawdust
 
 # Install locally
-just install
+make install
 ```
 
 ## Usage
 
-- A `Logger` instance must be created to use Woodchips. Simply specify a name and logging level, tell Woodchips where to log items (console and/or files), and start chipping away!
-- Need multiple loggers, no problem. Spin up separate `Logger` instances for your needs. Maybe you need a console logger for certain output that requires a specific format while another module needs a generic file formatter. Woodchips makes it easy to setup and configure all your loggers.
-- **Logging to a file:** Woodchips will automatically roll over your log files once it reaches the `log_size`. You can configure `num_of_logs` to specify how many log files will be kept in the rotation.
-  - **NOTE:** Woodchips has a very small default log size of just `200kb` with `5` log files for a total of `1mb` of logs. For production applications, these values may need to be drastically increased.
-- **Formatters:** You can configure the format of log files per handler (console and/or files); however, defaults are set (and shown below) if you just need basic logging.
-
-### Setting up Woodchips
+Create a `Logger` instance and start chipping/logging/dusting away!
 
 ```python
 import sawdust
@@ -43,45 +41,50 @@ import sawdust
 # Setup a new logger instance
 logger = sawdust.Logger(
     name='my_logger_name',  # The name of your logger instance, often will be `__name__`
-    level='INFO',  # The log level you want to use
+    level=sawdust.LogLevel.INFO,  # The log level you want to use
 )
 
 # Setup console logging
-logger.log_to_console(formatter='%(message)s')
+console_log_msg_format = sawdust.LogFormat()  # Only include the message in the console log
+logger.log_to_console(level=sawdust.LogLevel.WARNING, msg_format=console_log_msg_format)
 
 # Setup file logging
+file_log_msg_format = sawdust.LogFormat().include_time().include_level().include_calling_function()  # Include the time, level, and calling function in the file log
 logger.log_to_file(
-    location='path/to/log_files',
-    formatter='%(asctime)s - %(module)s.%(funcName)s - %(levelname)s - %(message)s',
+    folder_path='path/to/log_files',
+    file_name='my_log_file.log',
+    level=sawdust.LogLevel.DEBUG,
+    msg_format=file_log_msg_format,
     log_size=200000,  # Size of a single file in bytes
     num_of_logs=5,  # Number of log files to keep in the rotation
 )
-```
-
-### Using Woodchips
-
-```python
-import sawdust
-
-# Retrieve a logger instance by name (assumes it's already been created)
-logger = sawdust.get('my_logger_name')
 
 # Log a message (will be logged to console and a file based on the example from above)
-logger.info('This is how to setup Woodchips!')
+logger.info('This is how to setup Sawdust!')
+
+# Log a message without keeping a reference to the logger
+sawdust.info('This is how to setup Sawdust!', specific_logger='my_logger_name')
 ```
 
-### Logger Levels
+### Available Log Levels
 
-- CRITICAL
-- ERROR
-- WARNING
-- INFO
-- DEBUG
-- NOTSET
+- `LogLevel.CRITICAL`
+- `LogLevel.FATAL` (alias for `LogLevel.CRITICAL`, don't use this)
+- `LogLevel.ERROR`
+- `LogLevel.WARNING`
+- `LogLevel.WARN` (alias for `LogLevel.WARNING`, don't use this)
+- `LogLevel.INFO`
+- `LogLevel.DEBUG`
+- `LogLevel.NOTSET`
 
-## Development
+### Available Log Formats
 
-```bash
-# Get a comprehensive list of development tools
-just --list
-```
+Log elements will always appear in this order, with elements enabled or disabled accordingly:
+
+`LOGGER_NAME - TIMESTAMP - LOG_LEVEL - PROCESS - FUNCTION: MESSAGE`
+
+- `include_time()` - Include the time in the log
+- `include_level()` - Include the log level in the log
+- `include_calling_function()` - Include the calling function in the log
+- `include_logger_name()` - Include the logger name in the log
+- `include_process_name()` - Include the process name in the log
