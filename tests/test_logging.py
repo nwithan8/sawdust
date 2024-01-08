@@ -25,9 +25,9 @@ def test__get_logging_logger():
     assert logger.name == 'test__get_logging_logger'
 
 
-def test_get():
+def test__get():
     # Get a logger that doesn't exist (create it)
-    logger = sawdust.logging.get(name='test_get')
+    logger = sawdust.logging._get(name='test_get')
     # Since new, level should be the default
     assert logger._logger.level == sawdust.logging.DEFAULT_LOG_LEVEL.as_logging_module_level
 
@@ -35,7 +35,7 @@ def test_get():
     logger._logger.setLevel(sawdust.logging.LogLevel.DEBUG.as_logging_module_level)
 
     # Get the logger again (shouldn't create a new one, but return the existing one from cache)
-    logger = sawdust.logging.get(name='test_get')
+    logger = sawdust.logging._get(name='test_get')
     # Since it already exists, level should be whatever was set
     assert logger._logger.level == sawdust.logging.LogLevel.DEBUG.as_logging_module_level
 

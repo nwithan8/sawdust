@@ -194,7 +194,7 @@ class Logger:
         self._logger.debug(msg=message)
 
 
-def get(name: str) -> Logger:
+def _get(name: str) -> Logger:
     """
     Get a logger instance by name.
     You should instead consider making an instance of Logger and keeping track of it to avoid unnecessary overhead.
@@ -215,21 +215,21 @@ def critical(message: str, specific_logger: Optional[str] = None):
     """
     You should instead consider making an instance of Logger and keeping track of it to avoid unnecessary overhead.
     """
-    get(specific_logger if specific_logger else DEFAULT_LOGGER_NAME).critical(message=message)
+    _get(specific_logger if specific_logger else DEFAULT_LOGGER_NAME).critical(message=message)
 
 
 def error(message: str, specific_logger: Optional[str] = None):
     """
     You should instead consider making an instance of Logger and keeping track of it to avoid unnecessary overhead.
     """
-    get(specific_logger if specific_logger else DEFAULT_LOGGER_NAME).error(message=message)
+    _get(specific_logger if specific_logger else DEFAULT_LOGGER_NAME).error(message=message)
 
 
 def warning(message: str, specific_logger: Optional[str] = None):
     """
     You should instead consider making an instance of Logger and keeping track of it to avoid unnecessary overhead.
     """
-    get(specific_logger if specific_logger else DEFAULT_LOGGER_NAME).warning(message=message)
+    _get(specific_logger if specific_logger else DEFAULT_LOGGER_NAME).warning(message=message)
 
 
 def warn(message: str, specific_logger: Optional[str] = None):
@@ -245,11 +245,11 @@ def info(message: str, specific_logger: Optional[str] = None):
     """
     You should instead consider making an instance of Logger and keeping track of it to avoid unnecessary overhead.
     """
-    get(specific_logger if specific_logger else DEFAULT_LOGGER_NAME).info(message=message)
+    _get(specific_logger if specific_logger else DEFAULT_LOGGER_NAME).info(message=message)
 
 
 def debug(message: str, specific_logger: Optional[str] = None):
     """
     You should instead consider making an instance of Logger and keeping track of it to avoid unnecessary overhead.
     """
-    get(specific_logger if specific_logger else DEFAULT_LOGGER_NAME).debug(message=message)
+    _get(specific_logger if specific_logger else DEFAULT_LOGGER_NAME).debug(message=message)

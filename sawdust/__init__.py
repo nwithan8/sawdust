@@ -2,7 +2,6 @@ from sawdust.logging import (
     Logger,
     LogLevel,
     LogFormat,
-    get,
     info,
     debug,
     warn,
@@ -14,7 +13,6 @@ from sawdust.logging import (
 
 
 __all__ = [
-    'get',
     'info',
     'debug',
     'warn',
