@@ -9,7 +9,7 @@ An even cuter little logger.
 [![PyPi](https://img.shields.io/pypi/v/woodchips)](https://pypi.org/project/woodchips)
 [![Licence](https://img.shields.io/github/license/nwithan8/sawdust)](LICENSE)
 
-<img src="https://raw.githubusercontent.com/nwithan8/assets/main/src/sawdust/showcase.png" alt="Showcase">
+<img src="https://raw.githubusercontent.com/nwithan8/assets/main/images/projects/sawdust/showcase.png" alt="Showcase">
 
 </div>
 
